@@ -1,0 +1,21 @@
+name: Inject Secrets
+
+on:
+  workflow_dispatch:
+
+jobs:
+  inject-secrets:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up GitHub CLI
+      uses: cli/cli-action@v2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Inject secrets into target repo
+      run: |
+        gh auth login --with-token < ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        echo "${{ secrets.MY_SECRET }}" | gh secret set MY_SECRET --repo edwingr93/repo-destino
+      env:
+        GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
