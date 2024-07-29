@@ -32,6 +32,12 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
+    - name: Checkout target repository
+      uses: actions/checkout@v3
+      with:
+        repository: ${{ github.event.inputs.target_repo }} # Reemplaza con el nombre del repositorio objetivo
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
     - name: Use variable and inject it into target repository
       run: |
           # Aquí puedes utilizar la variable directamente. Ejemplo:
