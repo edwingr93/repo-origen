@@ -16,6 +16,6 @@ jobs:
     - name: Inject secrets into target repo
       run: |
         gh auth login --with-token < ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        echo "${{ secrets.MY_SECRET }}" | gh secret set MY_SECRET --repo edwingr93/repo-destino
+        echo "${{ secrets.MY_SECRET }}" | gh secret set MY_SECRET --repo edwingr93/repo-destin
       env:
         GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
