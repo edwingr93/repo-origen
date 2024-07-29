@@ -31,3 +31,14 @@ jobs:
         echo "${{ secrets.MY_SECRET2 }}" | gh variable set MY_SECRET2 --repo ${{ github.event.inputs.target_repo }}
       env:
         GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+    - name: Use variable and inject it into target repository
+      run: |
+          # Aquí puedes utilizar la variable directamente. Ejemplo:
+          echo "MY_VARIABLE=${{ vars.NAME }}" >> .env # Ajusta esto según tu necesidad
+          
+          git add .env
+          git commit -m "Add environment variable"
+          git push origin main
+      env:
+          VARIABLE1: ${{ vars.NAME }}
