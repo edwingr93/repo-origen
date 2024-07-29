@@ -28,5 +28,6 @@ jobs:
       run: |
         echo "${{ secrets.MY_SECRET }}" | gh secret set MY_SECRET --repo ${{ github.event.inputs.target_repo }}
         echo "${{ secrets.MY_SECRET2 }}" | gh secret set MY_SECRET2 --repo ${{ github.event.inputs.target_repo }}
+        echo "${{ secrets.MY_SECRET2 }}" | gh variable set MY_SECRET2 --repo ${{ github.event.inputs.target_repo }}
       env:
         GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
