@@ -1,8 +1,13 @@
 name: Inject Secrets
 
 on:
-  workflow_dispatch:  # Permite ejecutar manualmente el workflow desde la interfaz de GitHub
-
+  workflow_dispatch:
+    inputs:
+      target_repo:
+        description: 'Nombre del repositorio destino en formato owner/repo'
+        required: true
+        default: 'edwingr93/repo-destino'
+        
 jobs:
   inject-secrets:
     runs-on: ubuntu-latest
@@ -21,6 +26,6 @@ jobs:
 
     - name: Inject secrets into target repo
       run: |
-        echo "${{ secrets.MY_SECRET }}" | gh secret set MY_SECRET --repo edwingr93/repo-destino
+        echo "${{ secrets.MY_SECRET }}" | gh secret set MY_SECRET --repo ${{ github.event.inputs.target_repo }}
       env:
         GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
