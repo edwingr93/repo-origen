@@ -1,21 +1,26 @@
 name: Inject Secrets
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:  # Permite ejecutar manualmente el workflow desde la interfaz de GitHub
 
 jobs:
   inject-secrets:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set up GitHub CLI
-      uses: cli/cli-action@v2
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install GitHub CLI
+      run: |
+        sudo apt update
+        sudo apt install gh -y
+
+    - name: Authenticate with GitHub CLI
+      run: echo ${{ secrets.PERSONAL_ACCESS_TOKEN }} | gh auth login --with-token
 
     - name: Inject secrets into target repo
       run: |
-        gh auth login --with-token < ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         echo "${{ secrets.MY_SECRET }}" | gh secret set MY_SECRET --repo edwingr93/repo-destino
       env:
         GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
